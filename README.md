@@ -1,3 +1,3 @@
 # robot_arm_controller
 
-![screenshot]("Screenshot.png")
+![screenshot](Screenshot.png)
