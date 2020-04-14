@@ -6,7 +6,6 @@ import 'package:flutter/cupertino.dart';
 class MotorController {
 
   double _value = 0;
-  // TODO: communication stuff...
   get value {
     return _value;
   }
@@ -16,13 +15,13 @@ class MotorController {
     }
   }
   communicate(index){
-    //TODO: implement web socket communication stuff
+    var channel = IOWebSocketChannel.connect("ws://echo.websocket.org/");
+    channel.sink.add('$value');
     print("...COMMUNICATIONS... $index, $value");
   }
 }
 class MotorControllerManager with ChangeNotifier{
   List<MotorController> _controllers = List<MotorController>();
-  var channel = IOWebSocketChannel.connect("ws://echo.websocket.org/");
   get controllers => this._controllers;
   attachNewController(MotorController m){
     _controllers.add(m);
@@ -30,7 +29,6 @@ class MotorControllerManager with ChangeNotifier{
   changeValue(index,v){
     _controllers[index].value = v;
     _controllers[index].communicate(index);
-    channel.sink.add('$v');
     notifyListeners();
   }
 }
